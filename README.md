@@ -21,3 +21,10 @@ Or install it yourself as:
 ## Usage
 
 TODO: Write usage instructions here
+
+## Possible Next Steps:
+
+(Including some things that aren't in the specification but would improve usability.)
+- Allow multiple credit cards per user.
+- Back with a database instead of memory.
+- Remove validation repetition for user/project names and amounts.
