@@ -2,6 +2,10 @@ require_relative '../spec_helper'
 
 describe 'Minikick::User' do
 
+	before(:each) do
+		Minikick::User.credit_cards.clear
+	end
+
 	let(:default_credit_card) { '4111111111111111' }
 	let(:default_project) { 'LightSail' }
 	let(:default_amount) { '1000' }
@@ -17,9 +21,9 @@ describe 'Minikick::User' do
 
 	it 'allows both dollars and cents in the backing amount' do
 		backing_amount = '1000.99'
-		new_project = Minikick::User.new('Lynn_Conway', default_credit_card, default_project, backing_amount)
+		new_user = Minikick::User.new('Lynn_Conway', default_credit_card, default_project, backing_amount)
 
-		expect(new_project.amount).to eq(backing_amount)
+		expect(new_user.amount_backed_for(default_project)).to eq(backing_amount)
 	end
 
 	it 'raises an error if a project name contains invalid characters' do
@@ -55,7 +59,7 @@ describe 'Minikick::User' do
 
 	it 'raises an error if the backing amount contains "$"' do
 		backing_amount = '$1000'
-		invalid_amount_message = 'Project amount must not contain the "$" character.'
+		invalid_amount_message = 'Backing amount must not contain the "$" character.'
 
 		expect { Minikick::User.new('Barbara_Liskov', default_credit_card, default_project, backing_amount) }
 			.to raise_error(invalid_amount_message)
