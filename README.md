@@ -28,3 +28,5 @@ TODO: Write usage instructions here
 - Allow multiple credit cards per user.
 - Back with a database instead of memory.
 - Remove validation repetition for user/project names and amounts.
+- Make separate credit card class.
+- Potential dependency issue: both projects and users depend on RubyMoney. New class for amounts?
