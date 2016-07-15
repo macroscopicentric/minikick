@@ -77,4 +77,28 @@ describe 'Minikick::User' do
 
 	end
 
+	context "#backed_projects" do
+
+		let(:first_project_name) { default_project }
+		let(:first_project_amount) { '50' }
+		let(:second_project_name) { 'Exploding_Kittens' }
+		let(:second_project_amount) { '35' }
+
+		let(:user) do
+			user = Minikick::User.new('Adele_Goldberg', default_credit_card)
+			user.add_project_for_amount(default_project, '50')
+			user.add_project_for_amount('Exploding_Kittens', '35')
+			user
+		end
+
+		it 'returns all backed projects and their amounts' do
+			backed_projects = user.backed_projects
+
+			expect(backed_projects.length).to eq(2)
+			expect(backed_projects).to include(first_project_name => first_project_amount)
+			expect(backed_projects).to include(second_project_name => second_project_amount)
+		end
+
+	end
+
 end
