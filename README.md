@@ -30,3 +30,4 @@ TODO: Write usage instructions here
 - Remove validation repetition for user/project names and amounts.
 - Make separate credit card class.
 - Potential dependency issue: both projects and users depend on RubyMoney. New class for amounts?
+- Make User and Project subclasses of the same superclass to solve #3 and #4 above.
