@@ -11,19 +11,44 @@ class Minikick
 		def initialize(name, amount)
 			@name = validate_name(name)
 			@amount = validate_amount(amount).to_money
+			@backers_and_amounts = {}
 		end
 
 		def amount
-			return @amount.format(
-				no_cents_if_whole: true,
-				thousands_separator: false,
-				symbol: false
-			)
+			return format_amount(@amount)
+		end
+
+		def backers_and_amounts
+			return @backers_and_amounts.each_with_object({}) do |(backer, amount), formatted_hash|
+				formatted_hash[backer] = format_amount(amount)
+			end
+		end
+
+		def funding_needed
+			total_funding = @backers_and_amounts.values.reduce(:+)
+			funding_needed = @amount - total_funding
+			return format_amount(funding_needed)
+		end
+
+		def funded?
+			return self.funding_needed == '0'
+		end
+
+		def add_backer_and_amount(backer, amount)
+			@backers_and_amounts[backer] = amount.to_money
 		end
 
 
 		private
 
+
+		def format_amount(amount)
+			return amount.format(
+				no_cents_if_whole: true,
+				thousands_separator: false,
+				symbol: false
+			)
+		end
 
 		def validate_name(name)
 			validate_name_characters(name)
