@@ -9,18 +9,26 @@ class Minikick
 		attr_reader :name
 		attr_reader :credit_card
 
-		def initialize(name, credit_card, project, backing_amount)
+		def initialize(name, credit_card)
 			@name = validate_name(name)
 			@credit_card = validate_credit_card(credit_card)
-
-			@backed_projects = Hash.new
-			@backed_projects[project] = validate_amount(backing_amount).to_money
-
 			self.class.credit_cards.push(@credit_card)
+
+			@backed_projects = {}
+		end
+
+		def add_project_for_amount(project, amount)
+			@backed_projects[project] = validate_amount(amount).to_money
 		end
 
 		def amount_backed_for(project)
 			return format_amount(@backed_projects[project])
+		end
+
+		def backed_projects
+			return @backed_projects.each_with_object({}) do |(project, amount), formatted_hash|
+				formatted_hash[project] = format_amount(amount)
+			end
 		end
 
 
