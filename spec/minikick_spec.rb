@@ -13,7 +13,7 @@ describe 'Minikick' do
 	let(:default_backing_amount) { '20' }
 
 	it 'can add a new project' do
-		minikick = Minikick.new
+		minikick = Minikick::CLI.new
 
 		expect { minikick.add_project(default_project_name, default_project_amount) }.
 			to change { minikick.projects.length }.by( 1 )
@@ -21,7 +21,7 @@ describe 'Minikick' do
 	end
 
 	it 'can back a project' do
-		minikick = Minikick.new
+		minikick = Minikick::CLI.new
 		minikick.add_project(default_project_name, default_project_amount)
 
 		expect { minikick.back_project(default_user_name, default_project_name, default_credit_card, default_backing_amount) }.
@@ -30,7 +30,7 @@ describe 'Minikick' do
 	end
 
 	it 'can list the backers of a project' do
-		minikick = Minikick.new
+		minikick = Minikick::CLI.new
 		minikick.add_project(default_project_name, default_project_amount)
 		minikick.back_project(default_user_name, default_project_name, default_credit_card, default_backing_amount)
 
@@ -44,7 +44,7 @@ describe 'Minikick' do
 	end
 
 	it 'knows when a project has been successfully backed' do
-		minikick = Minikick.new
+		minikick = Minikick::CLI.new
 		minikick.add_project(default_project_name, default_project_amount)
 		minikick.back_project(default_user_name, default_project_name, default_credit_card, default_project_amount)
 
@@ -58,7 +58,7 @@ describe 'Minikick' do
 	end
 
 	it 'can list the projects a user has backed' do
-		minikick = Minikick.new
+		minikick = Minikick::CLI.new
 		minikick.add_project(default_project_name, default_project_amount)
 		minikick.back_project(default_user_name, default_project_name, default_credit_card, default_backing_amount)
 

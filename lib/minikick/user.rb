@@ -1,6 +1,6 @@
 require 'luhn'
 
-class Minikick
+module Minikick
 	class User
 
 		class << self; attr_accessor :credit_cards end

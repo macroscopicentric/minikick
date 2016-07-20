@@ -3,7 +3,7 @@ require 'monetize'
 
 Money.use_i18n = false
 
-class Minikick
+module Minikick
 	class Project
 
 		attr_reader :name
