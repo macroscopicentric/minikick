@@ -1,6 +1,6 @@
 require_relative '../spec_helper'
 
-describe 'MiniKick::Project' do
+describe 'Minikick::Project' do
 
 	let(:default_project_name) { 'Fancy_Cooler' }
 	let(:default_project_amount) { '1000' }
