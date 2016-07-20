@@ -25,4 +25,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "money", "~> 6.7"
   spec.add_dependency "monetize", "~> 1.4"
   spec.add_dependency "luhn", "~>1.0"
+  spec.add_dependency "gli", "~>2.14"
 end

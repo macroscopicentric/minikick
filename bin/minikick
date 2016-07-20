@@ -1,0 +1,60 @@
+#!/usr/bin/env ruby
+lib = File.expand_path('../../lib', __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
+require 'minikick'
+require 'gli'
+
+include GLI::App
+
+program_desc 'A toy command-line version of Kickstarter.'
+
+flag [:f, :file], :default_value => 'minikick_data.txt'
+
+pre do |global_options, command, options, args|
+	$minikick = Minikick::CLI.load_or_new(global_options[:file])
+end
+
+post do |global_options, command, options, args|
+	$minikick.save(global_options[:file])
+end
+
+desc 'Make a new project'
+command :project do |c|
+	c.action do |global_options, options, args|
+		# Hack because OptParse automatically removes '$' and the following
+		# character. I'm assuming that only the first digit of the number was
+		# significant.
+		invalid_amount_message = 'Project amount must not contain the "$" character.'
+		raise ArgumentError, invalid_amount_message unless args[-1].to_i != 0
+		puts $minikick.add_project(*args)
+	end
+end
+
+desc 'Back a project'
+command :back do |c|
+	c.action do |global_options, options, args|
+		# Hack because OptParse automatically removes '$' and the following
+		# character. I'm assuming that only the first digit of the number was
+		# significant.
+		invalid_amount_message = 'Backing amount must not contain the "$" character.'
+		raise ArgumentError, invalid_amount_message unless args[-1].to_i != 0
+		puts $minikick.back_project(*args)
+	end
+end
+
+desc 'List the backers of a project'
+command :list do |c|
+	c.action do |global_options, options, args|
+		puts $minikick.list_backers(*args)
+	end
+end
+
+desc 'List the projects a user has backed'
+command :backer do |c|
+	c.action do |global_options, options, args|
+		puts $minikick.list_projects_backed(*args)
+	end
+end
+
+exit run(ARGV)
