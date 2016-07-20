@@ -1,5 +1,4 @@
 #!/usr/bin/env ruby
-require 'json'
 
 class Minikick
 
@@ -17,10 +16,6 @@ class Minikick
 		@projects = {}
 	end
 
-	def self.save(filename=FILENAME)
-		File.open(filename, 'wb') {|f| f.write(Marshal.dump(self)) }
-	end
-
 	def self.load(filename=FILENAME)
 		return Marshal.load(File.binread(filename))
 	end
@@ -28,6 +23,10 @@ class Minikick
 	def self.load_or_new(filename=FILENAME)
 		File.exists?(filename) ? minikick = self.load(filename) : minikick = self.new
 		return minikick
+	end
+
+	def save(filename=FILENAME)
+		File.open(filename, 'wb') {|f| f.write(Marshal.dump(self)) }
 	end
 
 	def add_project(project_name, target_amount)
