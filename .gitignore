@@ -7,3 +7,5 @@
 /pkg/
 /spec/reports/
 /tmp/
+*.txt
+.DS_Store
